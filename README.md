@@ -1,7 +1,7 @@
 # Crypto-Predict
 
 Time series forecasting bitcoin price.<br/>
-Types of time series: Trend, Seasonal, Cyclic.
+Types of time series patterns: Trend, Seasonal, Cyclic.
 
 ## Dataset
 <TODO\>
