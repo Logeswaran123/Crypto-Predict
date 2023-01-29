@@ -7,7 +7,7 @@ Types of time series data: Univariate, Multivariate.
 ## Dataset
 Bitcoin dataset:<br/>
 * [Dataset 1 - Year 2013 to 2021](https://github.com/Logeswaran123/Crypto-Predict/blob/main/dataset/BTC_USD_2013-10-01_2021-05-18-CoinDesk.csv)
-* [Dataset 1 - Year 2014 to 2023](https://github.com/Logeswaran123/Crypto-Predict/blob/main/dataset/BTC-USD.csv)
+* [Dataset 2 - Year 2014 to 2023](https://github.com/Logeswaran123/Crypto-Predict/blob/main/dataset/BTC-USD.csv)
 
 ## How to run
 ```python
