@@ -1,5 +1,6 @@
 import argparse
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import tensorflow as tf
 
@@ -16,6 +17,35 @@ from utils import (
     plot_time_series)
 
 SAVE_DIR = "model_logs"
+
+
+def preprocess_for_block_reward(bitcoin_prices):
+    # Block reward values
+    block_reward_1 = 50 # 3 January 2009 (2009-01-03) - this block reward isn't in our dataset (it starts from 01 October 2013)
+    block_reward_2 = 25 # 28 November 2012 
+    block_reward_3 = 12.5 # 9 July 2016
+    block_reward_4 = 6.25 # 11 May 2020
+
+    # Block reward dates (datetime form of the above date stamps)
+    block_reward_2_datetime = np.datetime64("2012-11-28")
+    block_reward_3_datetime = np.datetime64("2016-07-09")
+    block_reward_4_datetime = np.datetime64("2020-05-11")
+
+    # Get date indexes for when to add in different block dates
+    block_reward_2_days = (block_reward_3_datetime - bitcoin_prices.index[0]).days
+    block_reward_3_days = (block_reward_4_datetime - bitcoin_prices.index[0]).days
+
+    # Add block_reward column
+    bitcoin_prices_block = bitcoin_prices.copy()
+    bitcoin_prices_block["block_reward"] = None
+
+    # Set values of block_reward column (it's the last column hence -1 indexing on iloc)
+    bitcoin_prices_block.iloc[:block_reward_2_days, -1] = block_reward_2
+    bitcoin_prices_block.iloc[block_reward_2_days:block_reward_3_days, -1] = block_reward_3
+    bitcoin_prices_block.iloc[block_reward_3_days:, -1] = block_reward_4
+
+    return bitcoin_prices_block
+
 
 def Experiments(dataset_path: str):
     # Parse dates and set date column to index
@@ -162,6 +192,47 @@ def Experiments(dataset_path: str):
     model_5_results = evaluate_preds(y_true=tf.squeeze(test_labels), # reduce to right shape
                                  y_pred=model_5_preds)
     print("\n------------\nExperiment 5 results: ", model_5_results)
+
+
+    # Add block reward as data to dataframe
+    # Change the univariate to a multivariate data
+    bitcoin_prices_block = preprocess_for_block_reward(bitcoin_prices)
+
+    # Make a copy of the Bitcoin historical data with block reward feature
+    bitcoin_prices_windowed = bitcoin_prices_block.copy()
+
+    horizon = 1
+    window_size = 7
+    # Add windowed columns
+    for i in range(window_size): # Shift values for each step in WINDOW_SIZE
+        bitcoin_prices_windowed[f"Price+{i+1}"] = bitcoin_prices_windowed["Price"].shift(periods=i+1)
+
+    # Create train and test sets. Remove the NaN's and convert to float32 dtype
+    X = bitcoin_prices_windowed.dropna().drop("Price", axis=1).astype(np.float32) 
+    y = bitcoin_prices_windowed.dropna()["Price"].astype(np.float32)
+
+    X_train, X_test, y_train, y_test = make_train_test_splits(X, y, 0.2)
+
+    # Fit model
+    model_name = "model_6_dense_multivariate"
+    model_6 = models.Model_1(horizon=horizon, name=model_name)
+    model_6.fit(x=X_train, # train windows of 7 timesteps of Bitcoin prices
+                y=y_train, # horizon value of 1 (using the previous 7 timesteps to predict next day)
+                epochs=100,
+                verbose=1,
+                batch_size=128,
+                validation_data=(X_test, y_test),
+                callbacks=[create_model_checkpoint(model_name=model_name)]) # create ModelCheckpoint callback to save best model
+
+    # Evaluate model on test data
+    # Load in saved best performing model_1 and evaluate on test data
+    model_6 = tf.keras.models.load_model("model_experiments/" + model_name)
+    model_6.evaluate(X_test, y_test)
+
+    model_6_preds = make_preds(model_6, X_test)
+    model_6_results = evaluate_preds(y_true=tf.squeeze(y_test),
+                                 y_pred=model_6_preds)
+    print("\n------------\nExperiment 6 results: ", model_6_results)
 
 
 
