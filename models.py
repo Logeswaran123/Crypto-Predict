@@ -22,8 +22,18 @@ class Model():
         """
         pass
 
-    def Model_1(self, train_sentences):
+    def Model_1(self, horizon):
         """
         Create and return a simple Dense Model
         """
-        pass
+        model = tf.keras.Sequential([
+                    layers.Dense(128, activation="relu"),
+                    layers.Dense(horizon, activation="linear")  # linear activation is the same as having no activation                        
+                    ], name="model_1_dense")
+
+        # Compile model
+        model.compile(loss="mae",
+                    optimizer=tf.keras.optimizers.Adam(),
+                    metrics=["mae"])    # we don't necessarily need this when the loss function is already MAE
+
+        return model
