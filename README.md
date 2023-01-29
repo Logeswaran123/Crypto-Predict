@@ -24,8 +24,8 @@ TODO
 ```
 
 ## References/Materials
-* [Time series patterns](https://otexts.com/fpp3/tspatterns.html)
 * [Time series forecasting in TensorFlow](https://colab.research.google.com/github/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb#scrollTo=vlVtweEv7nAx)
+* [Time series patterns](https://otexts.com/fpp3/tspatterns.html)
 * [Evaluating point forecast accuracy](https://otexts.com/fpp3/accuracy.html)
 * [Fast and Robust Sliding Window Vectorization with NumPy](https://towardsdatascience.com/fast-and-robust-sliding-window-vectorization-with-numpy-3ad950ed62f5)
 * [How (not) to use Machine Learning for time series forecasting: Avoiding the pitfalls](https://towardsdatascience.com/how-not-to-use-machine-learning-for-time-series-forecasting-avoiding-the-pitfalls-19f9d7adf424)
