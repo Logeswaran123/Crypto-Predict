@@ -22,14 +22,14 @@ class Model():
         """
         pass
 
-    def Model_1(self, horizon):
+    def Model_1(self, horizon: int, name: str):
         """
         Create and return a simple Dense Model
         """
         model = tf.keras.Sequential([
                     layers.Dense(128, activation="relu"),
                     layers.Dense(horizon, activation="linear")  # linear activation is the same as having no activation                        
-                    ], name="model_1_dense")
+                    ], name=name)
 
         # Compile model
         model.compile(loss="mae",
