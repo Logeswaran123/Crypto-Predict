@@ -92,6 +92,79 @@ def Experiments(dataset_path: str):
     print("\n------------\nExperiment 2 results: ", model_2_results)
 
 
+    full_windows, full_labels = make_windows(prices, window_size=30, horizon=7)
+    train_windows, test_windows, train_labels, test_labels = make_train_test_splits(full_windows, full_labels)
+
+    # Fit model
+    model_name = "model_3_dense"
+    model_3 = models.Model_1(horizon=7, name=model_name)
+    model_3.fit(x=train_windows, # train windows of 30 timesteps of Bitcoin prices
+                y=train_labels, # horizon value of 7 (using the previous 30 timesteps to predict next 7 day)
+                epochs=100,
+                verbose=1,
+                batch_size=128,
+                validation_data=(test_windows, test_labels),
+                callbacks=[create_model_checkpoint(model_name=model_name)]) # create ModelCheckpoint callback to save best model
+
+    # Evaluate model on test data
+    # Load in saved best performing model and evaluate on test data
+    model_3 = tf.keras.models.load_model("model_experiments/" + model_name)
+    model_3.evaluate(test_windows, test_labels)
+
+    model_3_preds = make_preds(model_3, test_windows)
+    model_3_results = evaluate_preds(y_true=tf.squeeze(test_labels), # reduce to right shape
+                                 y_pred=model_3_preds)
+    print("\n------------\nExperiment 3 results: ", model_3_results)
+
+
+    full_windows, full_labels = make_windows(prices, window_size=7, horizon=1)
+    train_windows, test_windows, train_labels, test_labels = make_train_test_splits(full_windows, full_labels)
+
+    # Fit model
+    model_name = "model_4_conv1d"
+    model_4 = models.Model_2(horizon=1, name=model_name)
+    model_4.fit(x=train_windows, # train windows of 7 timesteps of Bitcoin prices
+                y=train_labels, # horizon value of 1 (using the previous 7 timesteps to predict next day)
+                epochs=100,
+                verbose=1,
+                batch_size=128,
+                validation_data=(test_windows, test_labels),
+                callbacks=[create_model_checkpoint(model_name=model_name)]) # create ModelCheckpoint callback to save best model
+
+    # Evaluate model on test data
+    # Load in saved best performing model and evaluate on test data
+    model_4 = tf.keras.models.load_model("model_experiments/" + model_name)
+    model_4.evaluate(test_windows, test_labels)
+
+    model_4_preds = make_preds(model_4, test_windows)
+    model_4_results = evaluate_preds(y_true=tf.squeeze(test_labels), # reduce to right shape
+                                 y_pred=model_4_preds)
+    print("\n------------\nExperiment 4 results: ", model_4_results)
+
+
+    # Fit model
+    model_name = "model_5_lstm"
+    model_5 = models.Model_3(window_size=7, horizon=1, name=model_name)
+    model_5.fit(x=train_windows, # train windows of 7 timesteps of Bitcoin prices
+                y=train_labels, # horizon value of 1 (using the previous 7 timesteps to predict next day)
+                epochs=100,
+                verbose=1,
+                batch_size=128,
+                validation_data=(test_windows, test_labels),
+                callbacks=[create_model_checkpoint(model_name=model_name)]) # create ModelCheckpoint callback to save best model
+
+    # Evaluate model on test data
+    # Load in saved best performing model and evaluate on test data
+    model_5 = tf.keras.models.load_model("model_experiments/" + model_name)
+    model_5.evaluate(test_windows, test_labels)
+
+    model_5_preds = make_preds(model_5, test_windows)
+    model_5_results = evaluate_preds(y_true=tf.squeeze(test_labels), # reduce to right shape
+                                 y_pred=model_5_preds)
+    print("\n------------\nExperiment 5 results: ", model_5_results)
+
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', "--data", required=True, default="dataset",

@@ -229,10 +229,19 @@ def evaluate_preds(y_true, y_pred):
 
     # Calculate various metrics
     mae = tf.keras.metrics.mean_absolute_error(y_true, y_pred)
-    mse = tf.keras.metrics.mean_squared_error(y_true, y_pred) # puts and emphasis on outliers (all errors get squared)
+    mse = tf.keras.metrics.mean_squared_error(y_true, y_pred)
     rmse = tf.sqrt(mse)
     mape = tf.keras.metrics.mean_absolute_percentage_error(y_true, y_pred)
     mase = mean_absolute_scaled_error(y_true, y_pred)
+
+    # Account for different sized metrics (for longer horizons, reduce to single number).
+    # If metric is not already a scalar, reduce it to one value by taking mean.
+    if mae.ndim > 0:
+        mae = tf.reduce_mean(mae)
+        mse = tf.reduce_mean(mse)
+        rmse = tf.reduce_mean(rmse)
+        mape = tf.reduce_mean(mape)
+        mase = tf.reduce_mean(mase)
 
     return {"mae": mae.numpy(),
             "mse": mse.numpy(),

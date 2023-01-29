@@ -37,3 +37,38 @@ class Model():
                     metrics=["mae"])    # we don't necessarily need this when the loss function is already MAE
 
         return model
+
+    def Model_2(self, horizon: int, name: str):
+        """
+        Create and return a Conv1D Model
+        """
+        model = tf.keras.Sequential([
+                    # Create Lambda layer to reshape inputs for Conv1D 3D input shape requirements.
+                    layers.Lambda(lambda x: tf.expand_dims(x, axis=1)),
+                    layers.Conv1D(filters=128, kernel_size=5, padding="causal", activation="relu"), # "causal" padding used for temporal data
+                    layers.Dense(horizon)
+                    ], name=name)
+
+        # Compile model
+        model.compile(loss="mae",
+                    optimizer=tf.keras.optimizers.Adam())
+
+        return model
+
+    def Model_3(self, window_size: int, horizon: int, name: str):
+        """
+        Create and return a LSTM Model
+        """
+        inputs = layers.Input(shape=(window_size))
+        x = layers.Lambda(lambda x: tf.expand_dims(x, axis=1))(inputs)  # Create Lambda layer to reshape inputs for LSTM 3D input shape requirements.
+        x = layers.LSTM(128, activation="relu")(x)
+        output = layers.Dense(horizon)(x)
+        model = tf.keras.Model(inputs=inputs,
+                    outputs=output,
+                    name=name)
+
+        # Compile model
+        model.compile(loss="mae",
+                    optimizer=tf.keras.optimizers.Adam())
+
+        return model
