@@ -8,7 +8,12 @@ Types of time series data: Univariate, Multivariate.
 <TODO\>
 
 ## How to run
-<TODO\>
+```python
+python run.py --data <path to dataset> --exp <enable experiments>
+```
+Argumets:<br/>
+<path to dataset\> - Path to Dataset directory.<br/>
+<enable experiments\> - Enable model experiments. True or False. Default: False.
 
 ## Experiments
 <TODO\>
