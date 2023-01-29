@@ -16,8 +16,10 @@ Argumets:<br/>
 <enable experiments\> - Enable model experiments. True or False. Default: False.
 
 ## Experiments
-<TODO\>
-
+Following are test results with different modelling experiments, <br/>
+```
+TODO
+```
 
 ## References/Materials
 * [Time series patterns](https://otexts.com/fpp3/tspatterns.html)
