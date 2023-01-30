@@ -29,3 +29,4 @@ TODO
 * [Evaluating point forecast accuracy](https://otexts.com/fpp3/accuracy.html)
 * [Fast and Robust Sliding Window Vectorization with NumPy](https://towardsdatascience.com/fast-and-robust-sliding-window-vectorization-with-numpy-3ad950ed62f5)
 * [How (not) to use Machine Learning for time series forecasting: Avoiding the pitfalls](https://towardsdatascience.com/how-not-to-use-machine-learning-for-time-series-forecasting-avoiding-the-pitfalls-19f9d7adf424)
+* N-BEATS: Neural basis expansion analysis for interpretable time series forecasting | [Paper](https://arxiv.org/pdf/1905.10437.pdf)
