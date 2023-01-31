@@ -105,3 +105,53 @@ class Model():
                     optimizer=tf.keras.optimizers.Adam())
 
         return model
+
+    def Model_4(self, input_size: int, theta_size: int, horizon: int, n_hidden_units: int, n_hidden_layers: int, n_stacks: int, name: str):
+        """
+        Create and return a N-BEATS Model
+        Refer: Figure 1 in https://arxiv.org/pdf/1905.10437.pdf
+        """
+        # Setup N-BEATS Block layer
+        nbeats_block_layer = NBeatsBlock(input_size=input_size,
+                                        theta_size=theta_size,
+                                        horizon=horizon,
+                                        num_hidden_units=n_hidden_units,
+                                        num_hidden_layers=n_hidden_layers,
+                                        name="InitialBlock")
+
+        # Create input to stacks
+        stack_input = layers.Input(shape=(input_size), name="stack_input")
+
+        # Create initial backcast and forecast input (backwards predictions are referred to as residuals in the paper)
+        backcast, forecast = nbeats_block_layer(stack_input)
+
+        # Add in subtraction residual link, thank you to: https://github.com/mrdbourke/tensorflow-deep-learning/discussions/174 
+        residuals = layers.subtract([stack_input, backcast], name=f"subtract_00")
+
+        # Create stacks of blocks
+        for i, _ in enumerate(range(n_stacks - 1)):   # first stack is already creted above
+            # Use the NBeatsBlock to calculate the backcast as well as block forecast
+            backcast, block_forecast = NBeatsBlock(
+                                            input_size=input_size,
+                                            theta_size=theta_size,
+                                            horizon=horizon,
+                                            num_hidden_units=n_hidden_units,
+                                            num_hidden_layers=n_hidden_layers,
+                                            name=f"NBeatsBlock_{i}"
+                                        )(residuals)    # pass it in residuals (the backcast)
+
+            # Create the double residual stacking
+            residuals = layers.subtract([residuals, backcast], name=f"subtract_{i}") 
+            forecast = layers.add([forecast, block_forecast], name=f"add_{i}")
+
+        # Put the stack model together
+        model = tf.keras.Model(inputs=stack_input, 
+                    outputs=forecast, 
+                    name=name)
+
+        # Compile model
+        model.compile(loss="mae",
+                    optimizer=tf.keras.optimizers.Adam(0.001),
+                    metrics=["mae", "mse"])
+
+        return model

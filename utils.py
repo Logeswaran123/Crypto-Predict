@@ -34,6 +34,14 @@ def create_model_checkpoint(model_name, save_path="model_experiments"):
                                             save_best_only=True) # save only the best model to file
 
 
+def create_early_stopping(monitor="val_loss", patience=200, restore_best_weights=True):
+    return tf.keras.callbacks.EarlyStopping(monitor=monitor, patience=patience, restore_best_weights=restore_best_weights)
+
+
+def create_ReduceLROnPlateau(monitor="val_loss", patience=200, verbose=1):
+    return tf.keras.callbacks.ReduceLROnPlateau(monitor=monitor, patience=patience, verbose=verbose)
+
+
 def make_confusion_matrix(y_true, y_pred, classes=None, figsize=(10, 10), text_size=15, norm=False, savefig=False):
     """Makes a labelled confusion matrix comparing predictions and ground truth labels.
     If classes is passed, confusion matrix will be labelled, if not, integer class values

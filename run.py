@@ -10,6 +10,8 @@ from utils import (
     calculate_results,
     create_tensorboard_callback,
     create_model_checkpoint,
+    create_early_stopping,
+    create_ReduceLROnPlateau,
     make_train_test_splits,
     make_windows,
     make_preds,
@@ -233,6 +235,69 @@ def Experiments(dataset_path: str):
     model_6_results = evaluate_preds(y_true=tf.squeeze(y_test),
                                  y_pred=model_6_preds)
     print("\n------------\nExperiment 6 results: ", model_6_results)
+
+
+    horizon = 1
+    window_size = 7
+    # Add windowed columns
+    bitcoin_prices_nbeats = bitcoin_prices.copy()
+    for i in range(window_size):
+        bitcoin_prices_nbeats[f"Price+{i+1}"] = bitcoin_prices_nbeats["Price"].shift(periods=i+1)
+
+    # Make features and labels
+    X = bitcoin_prices_nbeats.dropna().drop("Price", axis=1)
+    y = bitcoin_prices_nbeats.dropna()["Price"]
+
+    X_train, X_test, y_train, y_test = make_train_test_splits(X, y, 0.2)
+
+    # Turn train and test arrays into tensor Datasets
+    train_features_dataset = tf.data.Dataset.from_tensor_slices(X_train)
+    train_labels_dataset = tf.data.Dataset.from_tensor_slices(y_train)
+
+    test_features_dataset = tf.data.Dataset.from_tensor_slices(X_test)
+    test_labels_dataset = tf.data.Dataset.from_tensor_slices(y_test)
+
+    # Combine features & labels
+    train_dataset = tf.data.Dataset.zip((train_features_dataset, train_labels_dataset))
+    test_dataset = tf.data.Dataset.zip((test_features_dataset, test_labels_dataset))
+
+    # Batch and prefetch for optimal performance
+    BATCH_SIZE = 1024   # taken from Appendix D in N-BEATS paper
+    train_dataset = train_dataset.batch(BATCH_SIZE).prefetch(tf.data.AUTOTUNE)
+    test_dataset = test_dataset.batch(BATCH_SIZE).prefetch(tf.data.AUTOTUNE)
+
+    # Values from N-BEATS paper Figure 1 and Table 18/Appendix D
+    N_EPOCHS = 5000 # called "Iterations" in Table 18
+    N_HIDDEN_UNITS = 512 # called "Width" in Table 18
+    N_HIDDEN_LAYERS = 4
+    N_STACKS = 30
+
+    INPUT_SIZE = window_size * horizon  # called "Lookback" in Table 18
+    THETA_SIZE = INPUT_SIZE + horizon
+
+    # Fit model
+    model_name = "model_7_NBEATS"
+    model_7 = models.Model_4(input_size=INPUT_SIZE,
+                theta_size=THETA_SIZE,
+                horizon=horizon,
+                n_hidden_units=N_HIDDEN_UNITS,
+                n_hidden_layers=N_HIDDEN_LAYERS,
+                n_stacks=N_STACKS,
+                name=model_name)
+    model_7.fit(train_dataset,
+                epochs=N_EPOCHS,
+                verbose=1,
+                validation_data=test_dataset,
+                callbacks=[create_early_stopping(monitor="val_loss", patience=200, restore_best_weights=True),
+                        create_ReduceLROnPlateau(monitor="val_loss", patience=100, verbose=1)])
+
+    # Evaluate model on test data
+    model_7.evaluate(test_dataset)
+
+    model_7_preds = make_preds(model_7, test_dataset)
+    model_7_results = evaluate_preds(y_true=tf.squeeze(y_test),
+                                 y_pred=model_7_preds)
+    print("\n------------\nExperiment 7 results: ", model_7_results)
 
 
 
