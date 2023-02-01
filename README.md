@@ -29,26 +29,18 @@ Following are test results with different modelling experiments on Bitcoin [Data
 | 6 | 561.48773 | 1142524.0 | 1068.8892 | 2.5082989 | 0.98637843 |
 | 7 | 585.95233 | 1181417.5 | 1086.9303 | 2.6820776 | 1.029356 |
 | 8 | 570.03577 | 1148885.9 | 1071.861 | 2.574097 | 1.001395 |
-<br/>
+
 Following are test results with different modelling experiments on Bitcoin [Dataset 2](https://github.com/Logeswaran123/Crypto-Predict/blob/main/dataset/BTC-USD.csv), <br/>
 | Experiment | MAE | MSE | RMSE | MAPE | MASE |
 |:----------:|:---:|:---:|:----:|:----:|:----:|
-| 1 |  |  |  |  |  |
-| 2 |  |  |  |  |  |
-| 3 |  |  |  |  |  |
-| 4 |  |  |  |  |  |
-| 5 |  |  |  |  |  |
-| 6 |  |  |  |  |  |
-| 7 |  |  |  |  |  |
-| 8 |  |  |  |  |  |
-```
-Experiment 1 results:  {'mae': 897.9873, 'mse': 1748085.2, 'rmse': 1322.1517, 'mape': 2.5301666, 'mase': 1.0396851}
-Experiment 2 results:  {'mae': 980.7088, 'mse': 2007265.5, 'rmse': 1416.7799, 'mape': 2.7592125, 'mase': 1.1376798}
-Experiment 3 results:  {'mae': 1801.161, 'mse': 6761461.0, 'rmse': 2066.2642, 'mape': 5.179323, 'mase': 2.081185}
-Experiment 4 results:  {'mae': 925.1461, 'mse': 1836865.2, 'rmse': 1355.3099, 'mape': 2.6168091, 'mase': 1.0711294}
-Experiment 5 results:  {'mae': 926.51843, 'mse': 1787148.1, 'rmse': 1336.8425, 'mape': 2.6173205, 'mase': 1.0727184}
-Experiment 6 results:  {'mae': 921.5974, 'mse': 1848266.1, 'rmse': 1359.5095, 'mape': 2.6031625, 'mase': 1.0670208}
-```
+| 1 | 897.9873 | 1748085.2 | 1322.1517 | 2.5301666 | 1.0396851 |
+| 2 | 980.7088 | 2007265.5 | 1416.7799 | 2.7592125 | 1.1376798 |
+| 3 | 1801.161 | 6761461.0 | 2066.2642 | 5.179323 | 2.081185 |
+| 4 | 925.1461 | 1836865.2 | 1355.3099 | 2.6168091 | 1.0711294 |
+| 5 | 926.51843 | 1787148.1 | 1336.8425 | 2.6173205 | 1.0727184 |
+| 6 | 921.5974 | 1848266.1 | 1359.5095 | 2.6031625 | 1.0670208 |
+| 7 | 898.4615 | 1732174.1 | 1316.1208 | 2.539521 | 1.0402342 |
+| 8 | 878.7631 | 1682583.0 | 1297.1442 | 2.4702914 | 1.0174274 |
 
 ## References/Materials
 * Time series forecasting in TensorFlow | [Colab](https://colab.research.google.com/github/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb#scrollTo=vlVtweEv7nAx) | [Book](https://dev.mrdbourke.com/tensorflow-deep-learning/10_time_series_forecasting_in_tensorflow/)
