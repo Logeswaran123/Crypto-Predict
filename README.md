@@ -42,6 +42,9 @@ Following are test results with different modelling experiments on Bitcoin [Data
 | 7 | 898.4615 | 1732174.1 | 1316.1208 | 2.539521 | 1.0402342 |
 | 8 | 878.7631 | 1682583.0 | 1297.1442 | 2.4702914 | 1.0174274 |
 
+## Images
+![BTC](https://github.com/Logeswaran123/Crypto-Predict/blob/main/images/btc_price_usd.png)
+
 ## References/Materials
 * Time series forecasting in TensorFlow | [Colab](https://colab.research.google.com/github/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb#scrollTo=vlVtweEv7nAx) | [Book](https://dev.mrdbourke.com/tensorflow-deep-learning/10_time_series_forecasting_in_tensorflow/)
 * [What can be forecast?](https://otexts.com/fpp3/what-can-be-forecast.html#what-can-be-forecast)
