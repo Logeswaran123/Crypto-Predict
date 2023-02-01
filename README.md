@@ -30,6 +30,16 @@ Following are test results with different modelling experiments on Bitcoin [Data
 | 7 | 585.95233 | 1181417.5 | 1086.9303 | 2.6820776 | 1.029356 |
 | 8 | 570.03577 | 1148885.9 | 1071.861 | 2.574097 | 1.001395 |
 
+Following are test results with different modelling experiments on Bitcoin [Dataset 2](https://github.com/Logeswaran123/Crypto-Predict/blob/main/dataset/BTC-USD.csv), <br/>
+```
+Experiment 1 results:  {'mae': 897.9873, 'mse': 1748085.2, 'rmse': 1322.1517, 'mape': 2.5301666, 'mase': 1.0396851}
+Experiment 2 results:  {'mae': 980.7088, 'mse': 2007265.5, 'rmse': 1416.7799, 'mape': 2.7592125, 'mase': 1.1376798}
+Experiment 3 results:  {'mae': 1801.161, 'mse': 6761461.0, 'rmse': 2066.2642, 'mape': 5.179323, 'mase': 2.081185}
+Experiment 4 results:  {'mae': 925.1461, 'mse': 1836865.2, 'rmse': 1355.3099, 'mape': 2.6168091, 'mase': 1.0711294}
+Experiment 5 results:  {'mae': 926.51843, 'mse': 1787148.1, 'rmse': 1336.8425, 'mape': 2.6173205, 'mase': 1.0727184}
+Experiment 6 results:  {'mae': 921.5974, 'mse': 1848266.1, 'rmse': 1359.5095, 'mape': 2.6031625, 'mase': 1.0670208}
+```
+
 ## References/Materials
 * Time series forecasting in TensorFlow | [Colab](https://colab.research.google.com/github/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb#scrollTo=vlVtweEv7nAx) | [Book](https://dev.mrdbourke.com/tensorflow-deep-learning/10_time_series_forecasting_in_tensorflow/)
 * [What can be forecast?](https://otexts.com/fpp3/what-can-be-forecast.html#what-can-be-forecast)
