@@ -29,8 +29,18 @@ Following are test results with different modelling experiments on Bitcoin [Data
 | 6 | 561.48773 | 1142524.0 | 1068.8892 | 2.5082989 | 0.98637843 |
 | 7 | 585.95233 | 1181417.5 | 1086.9303 | 2.6820776 | 1.029356 |
 | 8 | 570.03577 | 1148885.9 | 1071.861 | 2.574097 | 1.001395 |
-
+<br/>
 Following are test results with different modelling experiments on Bitcoin [Dataset 2](https://github.com/Logeswaran123/Crypto-Predict/blob/main/dataset/BTC-USD.csv), <br/>
+| Experiment | MAE | MSE | RMSE | MAPE | MASE |
+|:----------:|:---:|:---:|:----:|:----:|:----:|
+| 1 |  |  |  |  |  |
+| 2 |  |  |  |  |  |
+| 3 |  |  |  |  |  |
+| 4 |  |  |  |  |  |
+| 5 |  |  |  |  |  |
+| 6 |  |  |  |  |  |
+| 7 |  |  |  |  |  |
+| 8 |  |  |  |  |  |
 ```
 Experiment 1 results:  {'mae': 897.9873, 'mse': 1748085.2, 'rmse': 1322.1517, 'mape': 2.5301666, 'mase': 1.0396851}
 Experiment 2 results:  {'mae': 980.7088, 'mse': 2007265.5, 'rmse': 1416.7799, 'mape': 2.7592125, 'mase': 1.1376798}
