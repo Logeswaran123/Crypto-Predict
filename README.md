@@ -19,15 +19,16 @@ Argumets:<br/>
 
 ## Experiments
 Following are test results with different modelling experiments, <br/>
-```
-Experiment 1 results:  {'mae': 572.3841, 'mse': 1176096.6, 'rmse': 1084.4799, 'mape': 2.5496523, 'mase': 1.0055203}
-Experiment 2 results:  {'mae': 627.6924, 'mse': 1357934.2, 'rmse': 1165.3043, 'mape': 2.8776667, 'mase': 1.0972124}
-Experiment 3 results:  {'mae': 1225.6113, 'mse': 5238901.0, 'rmse': 1409.5638, 'mape': 5.620834, 'mase': 2.1809068}
-Experiment 4 results:  {'mae': 571.41223, 'mse': 1180010.9, 'rmse': 1086.2831, 'mape': 2.5529246, 'mase': 1.003813}
-Experiment 5 results:  {'mae': 593.54755, 'mse': 1266174.0, 'rmse': 1125.2439, 'mape': 2.6673453, 'mase': 1.0426986}
-Experiment 6 results:  {'mae': 561.48773, 'mse': 1142524.0, 'rmse': 1068.8892, 'mape': 2.5082989, 'mase': 0.98637843}
-Experiment 7 results:  {'mae': 585.95233, 'mse': 1181417.5, 'rmse': 1086.9303, 'mape': 2.6820776, 'mase': 1.029356}
-```
+| Experiment | MAE | MSE | RMSE | MAPE | MASE |
+|:----------:|:---:|:---:|:----:|:----:|:----:|
+| 1 | 572.3841 | 1176096.6 | 1084.4799 | 2.5496523 | 1.0055203 |
+| 2 | 627.6924 | 1357934.2 | 1165.3043 | 2.8776667 | 1.0972124 |
+| 3 | 1225.6113 | 5238901.0 | 1409.5638 | 5.620834 | 2.1809068 |
+| 4 | 571.41223 | 1180010.9 | 1086.2831 | 2.5529246 | 1.003813 |
+| 5 | 593.54755 | 1266174.0 | 1125.2439 | 2.6673453 | 1.0426986 |
+| 6 | 561.48773 | 1142524.0 | 1068.8892 | 2.5082989 | 0.98637843 |
+| 7 | 585.95233 | 1181417.5 | 1086.9303 | 2.6820776 | 1.029356 |
+| 8 |
 
 ## References/Materials
 * Time series forecasting in TensorFlow | [Colab](https://colab.research.google.com/github/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb#scrollTo=vlVtweEv7nAx) | [Book](https://dev.mrdbourke.com/tensorflow-deep-learning/10_time_series_forecasting_in_tensorflow/)
