@@ -186,6 +186,14 @@ def make_preds(model, input_data):
     return tf.squeeze(forecast) # return 1D array of predictions
 
 
+def make_ensemble_preds(ensemble_models, data):
+    ensemble_preds = []
+    for model in ensemble_models:
+        preds = model.predict(data)
+        ensemble_preds.append(preds)
+    return tf.constant(tf.squeeze(ensemble_preds))
+
+
 def plot_time_series(timesteps, values, format='.', start=0, end=None, label=None):
     """
     Plots a timesteps (a series of points in time) against values (a series of values across timesteps).

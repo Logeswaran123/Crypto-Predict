@@ -8,6 +8,10 @@ import tensorflow as tf
 from tensorflow.keras import layers
 from tensorflow.keras.layers.experimental.preprocessing import TextVectorization
 
+from utils import (
+    create_early_stopping,
+    create_ReduceLROnPlateau,
+)
 
 # Create NBeatsBlock custom layer
 # Refer: https://arxiv.org/pdf/1905.10437.pdf (N-BEATS)
@@ -155,3 +159,49 @@ class Model():
                     metrics=["mae", "mse"])
 
         return model
+
+
+def get_ensemble_models(horizon, 
+                        train_data,
+                        test_data,
+                        num_iter=10, 
+                        num_epochs=100, 
+                        loss_fns=["mae", "mse", "mape"]):
+    """
+    Returns a list of num_iter models each trained on MAE, MSE and MAPE loss.
+
+    For example, if num_iter=10, a list of 30 trained models will be returned:
+    10 * len(["mae", "mse", "mape"]).
+    """
+    ensemble_models = []
+
+    # Create num_iter number of models per loss function
+    for i in range(num_iter):
+        # Build and fit a new model with a different loss function
+        for loss_function in loss_fns:
+            print(f"Optimizing model by reducing: {loss_function} for {num_epochs} epochs, model number: {i}")
+
+            model = tf.keras.Sequential([
+            # Initialize layers with normal (Gaussian) distribution so we can use the models for prediction
+            # Interval estimation later: https://www.tensorflow.org/api_docs/python/tf/keras/initializers/HeNormal
+            layers.Dense(128, kernel_initializer="he_normal", activation="relu"), 
+            layers.Dense(128, kernel_initializer="he_normal", activation="relu"),
+            layers.Dense(horizon)                                 
+            ])
+
+            # Compile simple model with current loss function
+            model.compile(loss=loss_function,
+                        optimizer=tf.keras.optimizers.Adam(),
+                        metrics=["mae", "mse"])
+            
+            # Fit model
+            model.fit(train_data,
+                    epochs=num_epochs,
+                    verbose=0,
+                    validation_data=test_data,
+                    # Add callbacks to prevent training from going/stalling for too long
+                    callbacks=[create_early_stopping(monitor="val_loss", patience=200, restore_best_weights=True),
+                            create_ReduceLROnPlateau(monitor="val_loss", patience=100, verbose=1)])
+            ensemble_models.append(model)
+
+    return ensemble_models

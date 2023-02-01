@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import tensorflow as tf
 
-from models import Model
+from models import Model, get_ensemble_models
 from preprocess import load_and_preprocess
 from utils import (
     calculate_results,
@@ -15,6 +15,7 @@ from utils import (
     make_train_test_splits,
     make_windows,
     make_preds,
+    make_ensemble_preds,
     evaluate_preds,
     plot_time_series)
 
@@ -296,8 +297,23 @@ def Experiments(dataset_path: str):
 
     model_7_preds = make_preds(model_7, test_dataset)
     model_7_results = evaluate_preds(y_true=tf.squeeze(y_test),
-                                 y_pred=model_7_preds)
+                                    y_pred=model_7_preds)
     print("\n------------\nExperiment 7 results: ", model_7_results)
+
+
+    ensemble_models = get_ensemble_models(
+                                        horizon=horizon,
+                                        train_data=train_dataset,
+                                        test_data=test_dataset,
+                                        num_iter=5,
+                                        num_epochs=1000)
+
+    ensemble_preds = make_ensemble_preds(ensemble_models=ensemble_models,
+                                        data=test_dataset)
+
+    ensemble_results = evaluate_preds(y_true=tf.squeeze(y_test),
+                                        y_pred=np.median(ensemble_preds, axis=0))
+    print("\n------------\nExperiment 8 results: ", ensemble_results)
 
 
 
