@@ -24,7 +24,7 @@ TODO
 ```
 
 ## References/Materials
-* [Time series forecasting in TensorFlow](https://colab.research.google.com/github/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb#scrollTo=vlVtweEv7nAx)
+* Time series forecasting in TensorFlow | [Colab](https://colab.research.google.com/github/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb#scrollTo=vlVtweEv7nAx) | [Book](https://dev.mrdbourke.com/tensorflow-deep-learning/10_time_series_forecasting_in_tensorflow/)
 * [What can be forecast?](https://otexts.com/fpp3/what-can-be-forecast.html#what-can-be-forecast)
 * [Time series patterns](https://otexts.com/fpp3/tspatterns.html)
 * [Evaluating point forecast accuracy](https://otexts.com/fpp3/accuracy.html)
