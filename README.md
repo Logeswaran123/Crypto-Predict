@@ -18,7 +18,7 @@ Argumets:<br/>
 <enable experiments\> - Enable model experiments. True or False. Default: False.
 
 ## Experiments
-Following are test results with different modelling experiments, <br/>
+Following are test results with different modelling experiments on Bitcoin [Dataset 1](https://github.com/Logeswaran123/Crypto-Predict/blob/main/dataset/BTC_USD_2013-10-01_2021-05-18-CoinDesk.csv), <br/>
 | Experiment | MAE | MSE | RMSE | MAPE | MASE |
 |:----------:|:---:|:---:|:----:|:----:|:----:|
 | 1 | 572.3841 | 1176096.6 | 1084.4799 | 2.5496523 | 1.0055203 |
@@ -28,7 +28,7 @@ Following are test results with different modelling experiments, <br/>
 | 5 | 593.54755 | 1266174.0 | 1125.2439 | 2.6673453 | 1.0426986 |
 | 6 | 561.48773 | 1142524.0 | 1068.8892 | 2.5082989 | 0.98637843 |
 | 7 | 585.95233 | 1181417.5 | 1086.9303 | 2.6820776 | 1.029356 |
-| 8 |
+| 8 | 570.03577 | 1148885.9 | 1071.861 | 2.574097 | 1.001395 |
 
 ## References/Materials
 * Time series forecasting in TensorFlow | [Colab](https://colab.research.google.com/github/mrdbourke/tensorflow-deep-learning/blob/main/10_time_series_forecasting_in_tensorflow.ipynb#scrollTo=vlVtweEv7nAx) | [Book](https://dev.mrdbourke.com/tensorflow-deep-learning/10_time_series_forecasting_in_tensorflow/)
